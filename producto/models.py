@@ -1,11 +1,20 @@
 from django.db import models
 
 # Create your models here.
+
+class Categoria(models.Model):
+    nombre_categoria = models.CharField(max_length=50, unique=True)  # Nombre de la categoría
+    descripcion_categoria = models.TextField(blank=True)  # Descripción de la categoría (opcional)
+
+    def __str__(self):
+        return self.nombre_categoria  # Esto define cómo se mostrará el objeto en el admin de Django
+
+
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)  # Nombre del producto
     descripcion = models.TextField(blank=True)  # Descripción del producto (opcional)
     codigo_barras = models.CharField(max_length=50, unique=True)  # Código de barras único
-    categoria = models.CharField(max_length=50)  # Categoría del producto (ej: Bebidas)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)  # Relación con Categoria
     precio_venta = models.DecimalField(max_digits=10, decimal_places=2)  # Precio de venta
     precio_compra = models.DecimalField(max_digits=10, decimal_places=2)  # Precio de compra
     stock = models.IntegerField()  # Cantidad en stock
@@ -22,3 +31,4 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre  # Esto define cómo se mostrará el objeto en el admin de Django
+

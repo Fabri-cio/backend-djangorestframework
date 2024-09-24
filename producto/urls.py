@@ -6,6 +6,7 @@ from producto import views
 router = routers.DefaultRouter()
 
 router.register(r'producto', views.ProductoView, 'producto')
+router.register(r'categoria', views.CategoriaView, 'categoria')
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
